@@ -1,0 +1,229 @@
+/* 🌑 DARK THEME (default) */
+body {
+  background: #121212;
+  color: white;
+  transition: background 0.3s ease;
+}
+.search-results {
+  background: #222;
+  color: #eee;
+  border: 1px solid #555;
+  position: absolute;
+  width: 90%;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  display: none;
+}
+
+body.light .search-results {
+  background: #fff;
+  color: #000;
+}
+
+.result-item {
+  padding: 8px;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+}
+
+.result-item:hover {
+  background-color: #555;
+}
+
+body.light .result-item:hover {
+  background-color: #ddd;
+}
+
+
+/* ☀️ LIGHT THEME */
+body.light {
+  background: #f5f5f5;
+  color: #222;
+}
+
+body.light .race-card {
+  background: #fff;
+  border-color: #ddd;
+}
+
+body.light .skills-list li {
+  background: #eee;
+}
+
+.search-bar, .toggle-skills, #themeToggle {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+body.light .search-bar,
+body.light .toggle-skills,
+body.light #themeToggle {
+  background: #ddd;
+  color: black;
+}
+
+/* 📱 MOBILE STYLES */
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #444;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .race-card img {
+    width: 100%;
+  }
+}
+
+/* 🎨 SKILL TYPE COLORS */
+.skill-box.attack {
+  border-left: 5px solid #e74c3c; /* red */
+}
+.skill-box.defense {
+  border-left: 5px solid #3498db; /* blue */
+}
+.skill-box.magic {
+  border-left: 5px solid #9b59b6; /* purple */
+}
+
+  
+  /* INTRO PAGE */
+  .intro-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('/note-background.jpg') center center no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .note {
+    background: rgba(255, 255, 230, 0.9);
+    color: #111;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  .note button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  /* MAIN APP */
+  .app {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* SIDEBAR */
+  .sidebar {
+    width: 200px;
+    background: #222;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .sidebar button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .race-list {
+    padding-left: 10px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  /* MAIN PANEL */
+  .main-panel {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+  }
+  
+  .race-card {
+    text-align: center;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s;
+  }
+  
+  .race-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 15px 0;
+  }
+  
+  .race-description {
+    font-style: italic;
+    color: #ccc;
+    margin-bottom: 10px;
+  }
+
+  .skill-desc {
+    font-size: 0.9em;
+    color: #bbb;
+    margin-top: 4px;
+  }
+  .skills-list li {
+    display: block;
+    padding: 10px;
+    background: #333;
+    margin: 8px 0;
+    border-radius: 5px;
+  }  
+  
+  .skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+  
+  
+  img {
+    width: 150px;
+    height: 130px;
+    border-radius: 20px;
+  }
+
+
+  
+  

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RP Races & Skills</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <input type="text" id="searchInput" placeholder="Search..." oninput="liveSearch()" class="search-bar">
+<div id="searchResults" class="search-results"></div>
+
+
+  <!-- Intro Note Screen -->
+  <div id="intro" class="intro-screen">
+    <div class="note">
+      <h2>RP World Notes</h2>
+      <p>Welcome traveler.<br>These are the ancient records of races and their unique abilities.<br>Choose wisely.</p>
+      <button onclick="enterSite()">Continue</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="app" class="app" style="display: none;">
+   
+    <div class="sidebar">
+      <button id="themeToggle">Toggle Theme</button>
+      <button onclick="showHome()">🏠 Home</button>
+      <div class="race-section">
+        <button onclick="toggleRaceList()">🧬 Races ▾</button>
+        <div id="raceList" class="race-list" style="display: none;">
+          <% races.forEach((race, index) => { %>
+            <button onclick="showRace('<%= index %>')" class="race-button" data-index="<%= index %>"><%= race.name %></button>
+          <% }) %>
+          <div id="noResults" style="display: none; color: gray; margin-top: 1rem;">No results found 😞</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-panel">
+      <div id="homeContent">
+        <h2>Welcome to the AESTHETIC ROLE PLAY WORLD</h2>
+        <p>This archive holds knowledge about the ancient races and their powers.</p>
+      </div>
+
+      <% races.forEach((race, index) => { %>
+        <div class="race" id="race-<%= index %>" style="display: none;">
+          <div class="race-card">
+            <h1><%= race.name %></h1>
+            <img src="<%= race.image %>" alt="<%= race.name %>" style="max-width:100%;">
+            <p><%= race.description %></p>
+            <p><strong>💖HP:</strong> <%= race.hp %></p>
+            <p><strong>🔱EP:</strong> <%= race.ep %></p>
+
+            <button class="toggle-skills" onclick="toggleSkills(this)">Show Skills</button>
+            <ul class="skills-list" style="display:none;">
+              <% 
+              const sortedSkills = race.skills.sort((a, b) => a.name.localeCompare(b.name));
+              sortedSkills.forEach(skill => { 
+              %>
+                <li class="skill-box <%= skill.type %>">
+                  <strong><%= skill.name %></strong> - <span><%= skill.cost %> EP</span>
+                  <p class="skill-desc"><%= skill.description %></p>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <script>
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.body.classList.toggle('light');
+});
+
+function enterSite() {
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+}
+
+function toggleRaceList() {
+  const list = document.getElementById('raceList');
+  list.style.display = list.style.display === 'none' ? 'block' : 'none';
+}
+
+function showHome() {
+  document.getElementById('homeContent').style.display = 'block';
+  document.querySelectorAll('.race').forEach(div => div.style.display = 'none');
+}
+
+function showRace(index) {
+  document.getElementById('homeContent').style.display = 'none';
+  document.querySelectorAll('.race').forEach(div => div.style.display = 'none');
+  document.getElementById('race-' + index).style.display = 'block';
+}
+
+function toggleSkills(button) {
+  const skillList = button.nextElementSibling;
+  if (skillList.style.display === 'none') {
+    skillList.style.display = 'block';
+    button.textContent = 'Hide Skills';
+  } else {
+    skillList.style.display = 'none';
+    button.textContent = 'Show Skills';
+  }
+}
+
+// New Smart Search
+function liveSearch() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const resultsDiv = document.getElementById('searchResults');
+  resultsDiv.innerHTML = '';
+
+  if (query.trim() === '') {
+    resultsDiv.style.display = 'none';
+    return;
+  }
+
+  let results = [];
+
+  // Search race names
+  document.querySelectorAll('.race-button').forEach(button => {
+    const name = button.textContent.toLowerCase();
+    const index = button.getAttribute('data-index');
+    if (name.includes(query)) {
+      results.push({ type: 'race', name: button.textContent, index: index });
+    }
+  });
+
+  // Search skills
+  document.querySelectorAll('.race').forEach(raceDiv => {
+    const index = raceDiv.id.split('-')[1];
+    raceDiv.querySelectorAll('.skill-box').forEach(skillBox => {
+      const skillName = skillBox.querySelector('strong').textContent.toLowerCase();
+      const skillDesc = skillBox.querySelector('.skill-desc').textContent.toLowerCase();
+      if (skillName.includes(query) || skillDesc.includes(query)) {
+        results.push({ 
+          type: 'skill', 
+          name: skillBox.querySelector('strong').textContent, 
+          index: index,
+          raceName: document.querySelector(`.race-button[data-index="${index}"]`).textContent
+        });
+      }
+    });
+  });
+
+  if (results.length === 0) {
+    resultsDiv.innerHTML = '<div class="result-item">No results found 😞</div>';
+  } else {
+    results.forEach(result => {
+      const div = document.createElement('div');
+      div.className = 'result-item';
+      if (result.type === 'race') {
+        div.innerHTML = `<strong>${result.name}</strong> <small>(Race)</small>`;
+      } else {
+        div.innerHTML = `<strong>${result.name}</strong> <small>(Skill from ${result.raceName})</small>`;
+      }
+      div.onclick = () => {
+        showRace(result.index);
+        resultsDiv.style.display = 'none';
+        document.getElementById('searchInput').value = '';
+      };
+      resultsDiv.appendChild(div);
+    });
+  }
+  resultsDiv.style.display = 'block';
+}
+</script>

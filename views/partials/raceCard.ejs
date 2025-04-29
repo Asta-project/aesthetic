@@ -1,0 +1,22 @@
+<div class="race-card">
+  <h2><%= race.name %></h2>
+  <img src="<%= race.image %>" alt="<%= race.name %>" class="race-image">
+  <p class="race-description"><%= race.description %></p>
+
+  <div class="stats">
+    <p><strong>HP:</strong> <%= race.hp %> | <strong>EP:</strong> <%= race.ep %></p>
+  </div>
+
+  <button class="toggle-skills" onclick="toggleSkills(this)">Show Skills</button>
+  <ul class="skills-list" style="display: none;">
+    <% race.skills.forEach(skill => { %>
+      <li class="skill-box <%= skill.type %>">
+        <strong><%= skill.name %></strong> - <span><%= skill.cost %> EP</span>
+        <p class="skill-desc"><%= skill.description %></p>
+      </li>
+    <% }) %>
+  </ul>  
+  
+</div>
+
+  
